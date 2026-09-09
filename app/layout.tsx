@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   title: 'Museum Mood — Your reaction belongs in a museum',
   description:
     'Your reaction belongs in a museum. Explore six public-domain paintings and ten expressions from The Met.',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
