@@ -52,8 +52,12 @@ function MoodFace({ id }: { id: MoodId }) {
   </svg>;
 }
 function previewCamera(art: ArtworkRecord): Camera {
+  if (art.objectId === 435997) {
+    const paired = spotsFor(art)[0];
+    return paired ? reactionCamera(art, paired) : eyeCamera(art);
+  }
   const eye = eyeCamera(art);
-  return boundCamera({ ...eye, width: eye.width * 1.85, y: eye.y + .025 }, art);
+  return boundCamera({ ...eye, width: eye.width * 1.65, y: eye.y + .018 }, art);
 }
 type Pose = {
   x: number;
@@ -84,7 +88,7 @@ export function MoodDock({
       }}
       aria-label="how are we feeling?"
     >
-      {moods.map((m) => (
+      {moods.map((m, index) => (
         <label key={m.id} className={s.mood} data-selected={selected === m.id}>
           <RadioGroupItem
             className={s.radio}
@@ -103,6 +107,7 @@ export function MoodDock({
           <span className={s.emoji} aria-hidden="true">
             <MoodFace id={m.id} />
           </span>
+          <span className={s.moodIndex} aria-hidden="true">0{index + 1}</span>
           <span aria-hidden="true">{m.label}</span>
         </label>
       ))}
@@ -869,6 +874,7 @@ export default function MotionGallery({
         <h1 className={s.heading}>
           {mood.id}.
         </h1>
+        <p className={s.dockLabel}>how are we feeling?</p>
         <MoodDock moods={moods} selected={mood.id} onSelect={chooseMood} />
         <div className={s.stage} ref={stage}>
           <div className={s.stageLabel} aria-hidden="true">
@@ -915,10 +921,11 @@ export default function MotionGallery({
                     style={{ width: `${100 / crop.width}%`, left: `${50 - crop.x * 100 / crop.width}%`, top: `${50 - crop.y * record.height / record.width * 100 / crop.width}%` }}
                   />
                   </span>
-                  <span className={s.openHint} aria-hidden="true">explore this portrait +</span>
+                  <span className={s.openHint} aria-hidden="true">meet the look ↗</span>
                   <span className={s.tileCaption} aria-hidden="true">
                     <span className={s.artReaction}>{record.objectId === 437397 ? 'be serious.' : spotsFor(record)[0]?.label}</span>
                     <span className={s.artByline}>{record.objectId === 437397 ? 'rembrandt' : record.artist.toLowerCase()}</span>
+                    <span className={s.artMeta}>{record.title.toLowerCase()} · {record.date.toLowerCase()}</span>
                   </span>
                 </button>
               );
