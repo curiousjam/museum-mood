@@ -22,7 +22,6 @@ import {
   RotateCcw,
   Pause,
   Play,
-  ArrowUpRight,
 } from 'lucide-react';
 import {
   enabledMoods,
@@ -44,6 +43,18 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import s from './motion.module.css';
 
 type Point = { x: number; y: number };
+function MoodFace({ id }: { id: MoodId }) {
+  return <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" aria-hidden="true">
+    <circle className={s.faceOutline} cx="12" cy="12" r="10" />
+    <g className={s.faceFeatures}>
+    {id === 'judging' ? <><path d="M5 9h5m4 0h5M9 16h6"/><path d="M8 9v2m9-2v2"/></> : id === 'suspicious' ? <><path d="m5 7 5 2m4 0 5-2M9 16l6-1"/><path d="M8 10v1m8-1v1"/></> : id === 'panicking' ? <><circle cx="8" cy="9" r="1.5"/><circle cx="16" cy="9" r="1.5"/><ellipse cx="12" cy="16" rx="2" ry="3"/></> : <><path d="M6 8h4m4 2h4M8 10v1m8 1v1m-7 4q3-3 6 0"/></>}
+    </g>
+  </svg>;
+}
+function previewCamera(art: ArtworkRecord): Camera {
+  const eye = eyeCamera(art);
+  return boundCamera({ ...eye, width: eye.width * 1.85, y: eye.y + .025 }, art);
+}
 type Pose = {
   x: number;
   y: number;
@@ -90,9 +101,9 @@ export function MoodDock({
             }
           />
           <span className={s.emoji} aria-hidden="true">
-            {m.emoji}
+            <MoodFace id={m.id} />
           </span>
-          {selected === m.id && <span aria-hidden="true">{m.label}</span>}
+          <span aria-hidden="true">{m.label}</span>
         </label>
       ))}
     </RadioGroup>
@@ -252,22 +263,23 @@ export default function MotionGallery({
     });
     paint();
   }
-  function tilePose(id: number, includeHover = false) {
+  function tilePose(id: number, includeHover = false, startRect?: DOMRect, destinationRect?: DOMRect) {
     const tile = tiles.current.get(id),
       destination = target.current;
     if (!tile || !destination)
       return { x: 0, y: 0, scale: 0.15, rotation: 0, clip: 0, swipe: 0 };
-    const a = tile.getBoundingClientRect(),
-      b = destination.getBoundingClientRect();
+    const visual = tile.querySelector<HTMLElement>('[data-motion-preview]') ?? tile;
+    const a = startRect ?? visual.getBoundingClientRect(),
+      b = destinationRect ?? destination.getBoundingClientRect();
     const style = getComputedStyle(tile);
     // Continue opening from the hovered size, including an interrupted hover tween.
     const magnification = includeHover ? parseFloat(style.scale) || 1 : 1;
     return {
       x: a.left + a.width / 2 - b.left - b.width / 2,
       y: a.top + a.height / 2 - b.top - b.height / 2,
-      scale: (tile.offsetWidth * magnification) / b.width,
+      scale: (visual.offsetWidth * magnification) / b.width,
       rotation: parseFloat(style.rotate) || 0,
-      clip: 0,
+      clip: (Math.max(9 / 16, engine.current.art.height / engine.current.art.width) - visual.offsetHeight / visual.offsetWidth) / Math.max(.001, Math.max(9 / 16, engine.current.art.height / engine.current.art.width) - 9 / 16),
       swipe: 0,
     };
   }
@@ -365,16 +377,18 @@ export default function MotionGallery({
     setSpotIndex(0);
     setShowSpots(false);
     remembered.current.set(e.mood.id, record.objectId);
-    Object.assign(e.camera, { x: 0.5, y: 0.5, width: 1 });
-    Object.assign(e.pose, tilePose(record.objectId, true));
+    Object.assign(e.camera, previewCamera(record));
+    const startRect = tiles.current.get(record.objectId)?.querySelector('[data-motion-preview]')?.getBoundingClientRect();
     flushSync(() => {
       setArt(record);
-      setSrc(record.thumbnail);
+      setSrc(record.image);
       changePhase('opening');
       setNotice('');
       setFailed(false);
     });
     measure();
+    Object.assign(e.pose, tilePose(record.objectId, true, startRect));
+    paint();
     frame.current?.focus({ preventScroll: true });
     gsap.to(e.pose, {
       x: 0,
@@ -410,11 +424,12 @@ export default function MotionGallery({
     setNotice('');
     setShowSpots(false);
     changePhase('closing');
-    const tile = tilePose(e.art.objectId);
+    const destinationRect = target.current?.getBoundingClientRect();
+    root.current?.setAttribute('data-open', 'false');
+    const tile = tilePose(e.art.objectId, false, undefined, destinationRect);
+    root.current?.setAttribute('data-open', 'true');
     gsap.to(e.camera, {
-      x: 0.5,
-      y: 0.5,
-      width: 1,
+      ...previewCamera(e.art),
       duration: e.reduced ? 0 : 0.65,
       ease: 'power3.inOut',
       onUpdate: paint,
@@ -741,6 +756,7 @@ export default function MotionGallery({
           y: 0,
           opacity: 1,
           rotationY: 0,
+          rotation: 0,
           duration: engine.current.reduced ? 0 : 0.5,
           stagger: engine.current.reduced ? 0 : 0.07,
           ease: 'power3.out',
@@ -845,26 +861,20 @@ export default function MotionGallery({
     >
       <header className={s.header}>
         <a href="/" className={s.brand}>
-          <span className={s.brandMark} aria-hidden="true">
-            m.
-          </span>{' '}
           museum mood
-        </a>
-        <a className={s.edition} href={`/classic?mood=${mood.id}`}>
-          caption studio ↗
         </a>
       </header>
       <section className={s.surface} aria-label="painting explorer">
-        <p className={s.kicker}>old masters. extremely online.</p>
+        <p className={s.kicker}>the art of</p>
         <h1 className={s.heading}>
-          how are we <em>feeling?</em>
+          {mood.id}.
         </h1>
         <MoodDock moods={moods} selected={mood.id} onSelect={chooseMood} />
         <div className={s.stage} ref={stage}>
           <div className={s.stageLabel} aria-hidden="true">
-            <span>the {mood.label} collection</span>
+            <span>old art. current feelings.</span>
             <span>
-              {String(mood.artworkIds.length).padStart(2, '0')} works ↘
+              choose a face below
             </span>
           </div>
           <div
@@ -877,8 +887,10 @@ export default function MotionGallery({
               pointerEvents: open ? 'none' : 'auto',
             }}
           >
-            {mood.artworkIds.map((id, index) => {
+            <span className={s.alternateLabel} aria-hidden="true">other ways to say it</span>
+            {mood.artworkIds.map((id) => {
               const record = getArtwork(id);
+              const crop = previewCamera(record);
               return (
                 <button
                   data-motion-tile
@@ -893,18 +905,20 @@ export default function MotionGallery({
                   onClick={() => openArt(record)}
                   aria-label={`explore ${record.title} by ${record.artist}`}
                 >
+                  <span className={s.thumbnailMask} data-motion-preview>
                   <img
-                    src={record.thumbnail}
+                    src={record.image}
+                    decoding="async"
                     width={record.width}
                     height={record.height}
                     alt={record.alt}
+                    style={{ width: `${100 / crop.width}%`, left: `${50 - crop.x * 100 / crop.width}%`, top: `${50 - crop.y * record.height / record.width * 100 / crop.width}%` }}
                   />
+                  </span>
+                  <span className={s.openHint} aria-hidden="true">explore this portrait +</span>
                   <span className={s.tileCaption} aria-hidden="true">
-                    <span>
-                      {String(index + 1).padStart(2, '0')} /{' '}
-                      {record.artist.split(' ').at(-1)?.toLowerCase()}
-                    </span>
-                    <ArrowUpRight size={15} />
+                    <span className={s.artReaction}>{record.objectId === 437397 ? 'be serious.' : spotsFor(record)[0]?.label}</span>
+                    <span className={s.artByline}>{record.objectId === 437397 ? 'rembrandt' : record.artist.toLowerCase()}</span>
                   </span>
                 </button>
               );
@@ -977,21 +991,7 @@ export default function MotionGallery({
           )}
         </div>
         <div className={s.below}>
-          {!open ? (
-            <p className={s.hint}>
-              <span className={s.hintTitle}>
-                {mood.id === 'judging'
-                  ? 'three very old opinions.'
-                  : mood.id === 'suspicious'
-                    ? 'everyone has a take.'
-                    : mood.id === 'confused'
-                      ? 'still processing.'
-                      : 'a perfectly normal response.'}
-              </span>
-              <br />
-              pick a face. there’s a lot going on.
-            </p>
-          ) : (
+          {open && (
             <>
               <div className={s.controls} aria-label="painting controls">
                 <button
@@ -1086,11 +1086,6 @@ export default function MotionGallery({
               ) : (
                 <p className={s.reaction}>{expression.label}</p>
               )}
-              <p className={s.hint}>
-                {phase === 'exploring'
-                  ? 'drag to explore · eyes to browse again'
-                  : 'swipe for another · pinch to look closer'}
-              </p>
               <p className={s.credit}>
                 <a href={art.source} target="_blank" rel="noreferrer">
                   {art.title}
@@ -1115,7 +1110,7 @@ export default function MotionGallery({
         </div>
       </section>
       <footer className={s.foot}>
-        <span>old art. current feelings.</span>
+        <span className={s.signature}>old art. current feelings. <a href="https://x.com/jezamancenido" target="_blank" rel="noreferrer">@jezamancenido ↗</a></span>
         <button
           className={s.motionToggle}
           onClick={() => setMotionPaused(!motionPaused)}

@@ -77,16 +77,16 @@ export const reactionSpots: ReactionSpot[] = [
     full: true,
   },
   {
-    id: 'wait-what',
-    objectId: 435997,
-    label: 'wait what',
-    crop: { x: 0.39, y: 0.325, width: 0.12 },
-  },
-  {
     id: 'we-should-leave',
     objectId: 435997,
     label: 'we should leave',
     crop: { x: 0.245, y: 0.27, width: 0.3 },
+  },
+  {
+    id: 'wait-what',
+    objectId: 435997,
+    label: 'wait what',
+    crop: { x: 0.39, y: 0.325, width: 0.12 },
   },
 ];
 export function spotsFor(art: ArtworkRecord) {
