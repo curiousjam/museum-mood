@@ -42,6 +42,12 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import s from './motion.module.css';
 
 type Point = { x: number; y: number };
+const exhibitionTitles: Partial<Record<MoodId, string>> = {
+  judging: 'judging',
+  suspicious: 'suspicion',
+  confused: 'confusion',
+  panicking: 'panic',
+};
 function MoodFace({ id }: { id: MoodId }) {
   return <svg viewBox="0 0 24 18" width="24" height="18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
     <g className={s.faceFeatures}>
@@ -888,7 +894,7 @@ export default function MotionGallery({
     >
       <header className={s.header}>
         <a href="/" className={s.brand}>
-          museum mood
+          the art of <span>{exhibitionTitles[mood.id] ?? mood.label}</span>
         </a>
       </header>
       <section className={s.surface} aria-label="painting explorer">
