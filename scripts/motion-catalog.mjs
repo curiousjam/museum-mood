@@ -60,7 +60,7 @@ const selections = [
   },
   {
     objectId: 11137,
-    eyeCrop: { x: 0.35, y: 0.36, width: 0.12 },
+    eyeCrop: { x: 0.28, y: 0.29, width: 0.3 },
     alt: 'Three men brace themselves in a canoe as it plunges through foaming river rapids.',
   },
 ];

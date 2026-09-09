@@ -73,7 +73,7 @@ export const reactionSpots: ReactionSpot[] = [
   { id: 'what-was-that', objectId: 438407, label: 'what was that?' },
   { id: 'processing', objectId: 10827, label: 'processing…' },
   { id: 'trying-to-follow', objectId: 436582, label: 'trying to follow' },
-  { id: 'one-more-time', objectId: 437630, label: 'one more time?' },
+  { id: 'one-more-time', objectId: 437630, label: 'i don’t get it' },
   {
     id: 'we-should-leave',
     objectId: 435997,
@@ -91,19 +91,19 @@ export const reactionSpots: ReactionSpot[] = [
     id: 'hold-on',
     objectId: 11137,
     label: 'hold on',
-    crop: { x: 0.35, y: 0.36, width: 0.12 },
+    crop: { x: 0.28, y: 0.29, width: 0.3 },
   },
   {
     id: 'still-holding',
     objectId: 11137,
-    label: 'still holding',
-    crop: { x: 0.71, y: 0.46, width: 0.16 },
+    label: 'oh no',
+    crop: { x: 0.58, y: 0.41, width: 0.3 },
   },
   {
     id: 'absolutely-not',
     objectId: 11137,
-    label: 'absolutely not',
-    crop: { x: 0.85, y: 0.39, width: 0.15 },
+    label: 'this is fine',
+    crop: { x: 0.79, y: 0.36, width: 0.21 },
   },
 ];
 export function spotsFor(art: ArtworkRecord) {
