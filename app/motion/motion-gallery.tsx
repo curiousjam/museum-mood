@@ -945,6 +945,7 @@ export default function MotionGallery({
                 ref={frame}
                 className={s.frame}
                 tabIndex={0}
+                title={`${art.title} — ${art.artist}`}
                 aria-label={`${art.title}. ${expression.label}. ${phase === 'exploring' ? 'drag to pan' : 'swipe up or down for another reaction'}. pinch or use controls to zoom.`}
                 onPointerDown={pointerDown}
                 onPointerMove={pointerMove}
@@ -971,6 +972,10 @@ export default function MotionGallery({
                     }}
                   />
                 </div>
+                <span className={s.viewerTitle} aria-hidden="true">
+                  <strong>{art.title}</strong>
+                  <span>{art.artist}, {art.date}</span>
+                </span>
                 {showSpots &&
                   art.width > art.height &&
                   expressions.length > 1 &&
