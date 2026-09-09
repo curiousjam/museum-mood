@@ -936,6 +936,18 @@
   .foot > .signature { display: inline-flex; justify-content: flex-start; }
 }
 
+/* Keep desktop metadata and related works in separate vertical bands. */
+.artMeta { display: none !important; }
+@media (min-width: 1100px) {
+  .root[data-open='false'] .cluster,
+  .root[data-open='false'] .cluster[data-count='1'] { height: min(920px, calc(88vw * .66)); }
+  .root[data-open='false'] .tile:nth-of-type(1) .tileCaption { top: 18%; }
+  .root[data-open='false'] .tile:nth-of-type(1) .openHint { top: calc(18% + 220px); }
+  .root[data-open='false'] .tile:nth-of-type(2),
+  .root[data-open='false'] .tile:nth-of-type(3) { top: calc(82% + 96px); }
+  .alternateLabel { top: calc(82% + 56px); }
+}
+
 /* Gallery key and expression-only mood marks. */
 .faceFeatures, .mood[data-selected='true'] .faceFeatures { stroke: currentColor; }
 .mood[data-selected='true'] .emoji { color: #dbff82; }
