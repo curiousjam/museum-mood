@@ -20,7 +20,7 @@ const selections = [
   },
   {
     objectId: 436838,
-    eyeCrop: { x: 0.09, y: 0.09, width: 0.82 },
+    eyeCrop: { x: 0.545, y: 0.165, width: 0.12 },
     alt: 'Five figures exchange sideways glances around a young man visiting a fortune-teller.',
   },
   {
