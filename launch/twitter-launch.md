@@ -2,11 +2,11 @@
 
 ## Post
 
-i thought i was making a reaction-image generator.
+the first thing an agent makes is rarely the interesting part.
 
-after many increasingly specific iterations, it became a tiny museum where you look people in old paintings directly in the eyes.
+the interesting part is the iteration—when it stops feeling generated and starts feeling like yours.
 
-the first version was fast. figuring out what the thing actually wanted to become was the interesting part.
+i started with a meme generator. ended with a tiny museum where you look old paintings in the eyes.
 
 https://museum-mood.becoming.chatgpt.site
 
