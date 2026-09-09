@@ -18,7 +18,6 @@ import {
   ArrowDown,
   Minus,
   Plus,
-  X,
   RotateCcw,
   Pause,
   Play,
@@ -85,7 +84,7 @@ export function MoodDock({
         const next = moods.find((m) => m.id === value);
         if (next) onSelect(next);
       }}
-      aria-label="how are we feeling?"
+      aria-label="choose a mood"
     >
       {moods.map((m, index) => (
         <label key={m.id} className={s.mood} data-selected={selected === m.id}>
@@ -873,7 +872,6 @@ export default function MotionGallery({
         <h1 className={s.heading}>
           {mood.id}.
         </h1>
-        <p className={s.dockLabel}>how are we feeling?</p>
         <MoodDock moods={moods} selected={mood.id} onSelect={chooseMood} />
         <div className={s.stage} ref={stage}>
           <div className={s.stageLabel} aria-hidden="true">
@@ -926,7 +924,7 @@ export default function MotionGallery({
                     <strong>{record.title}</strong>
                     <span>{record.artist}, {record.date}</span>
                   </span>
-                  <span className={s.openHint} aria-hidden="true">meet the look ↗</span>
+                  <span className={s.openHint} aria-hidden="true">look closer ↗</span>
                   <span className={s.tileCaption} aria-hidden="true">
                     <span className={s.artReaction}>{record.objectId === 437397 ? 'be serious.' : spotsFor(record)[0]?.label}</span>
                     <span className={s.artByline}>{record.objectId === 437397 ? 'rembrandt' : record.artist.toLowerCase()}</span>
@@ -1075,7 +1073,7 @@ export default function MotionGallery({
                   onClick={closeViewer}
                   aria-label="close painting"
                 >
-                  <X size={17} />
+                  back
                 </button>
               </div>
               {expressions.length > 1 ? (

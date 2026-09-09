@@ -936,6 +936,30 @@
   .foot > .signature { display: inline-flex; justify-content: flex-start; }
 }
 
+/* Gallery key and expression-only mood marks. */
+.faceFeatures, .mood[data-selected='true'] .faceFeatures { stroke: currentColor; }
+.mood[data-selected='true'] .emoji { color: #dbff82; }
+.galleryLabel {
+  top: 100%;
+  padding: 12px 14px 13px;
+  background: #eef0e5;
+  color: #151d1c;
+  border-top: 2px solid #dbff82;
+  z-index: 3;
+}
+.galleryLabel strong { font-size: 1.05rem; }
+.galleryLabel span { color: #505b55; font-size: .78rem; }
+@media (min-width: 1100px) {
+  .root[data-open='false'] .dock { margin-top: 0; }
+}
+@media (max-width: 760px) {
+  .root[data-open='false'] .tile:nth-of-type(1) .galleryLabel { top: 100%; }
+  .root[data-open='false'] .tile:nth-of-type(1) .openHint { top: calc(100% + 94px); }
+  .alternateLabel { top: calc(100vw - 36px + 156px); }
+  .root[data-open='false'] .tile:nth-of-type(2),
+  .root[data-open='false'] .tile:nth-of-type(3) { top: calc(100vw - 36px + 194px); }
+}
+
 @media (min-width: 1100px) {
   .root[data-open='false'] .tile:nth-of-type(1) .tileCaption { top: 32%; width: 95%; max-width: none; z-index: 2; }
   .root[data-open='false'] .tile:nth-of-type(1) .artReaction { font-size: 10rem; line-height: 1; max-width: none; white-space: nowrap; letter-spacing: -.065em; color: #dbff82; }
