@@ -44,10 +44,9 @@ import s from './motion.module.css';
 
 type Point = { x: number; y: number };
 function MoodFace({ id }: { id: MoodId }) {
-  return <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" aria-hidden="true">
-    <circle className={s.faceOutline} cx="12" cy="12" r="10" />
+  return <svg viewBox="0 0 24 18" width="24" height="18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
     <g className={s.faceFeatures}>
-    {id === 'judging' ? <><path d="M5 9h5m4 0h5M9 16h6"/><path d="M8 9v2m9-2v2"/></> : id === 'suspicious' ? <><path d="m5 7 5 2m4 0 5-2M9 16l6-1"/><path d="M8 10v1m8-1v1"/></> : id === 'panicking' ? <><circle cx="8" cy="9" r="1.5"/><circle cx="16" cy="9" r="1.5"/><ellipse cx="12" cy="16" rx="2" ry="3"/></> : <><path d="M6 8h4m4 2h4M8 10v1m8 1v1m-7 4q3-3 6 0"/></>}
+    {id === 'judging' ? <><path d="M3 5h7m4 0h7M7 12h10"/><path d="M7 5v2m10-2v2"/></> : id === 'suspicious' ? <><path d="m3 3 7 3m4 0 7-3M8 13l8-1"/><path d="M7 7v2m10-2v2"/></> : id === 'panicking' ? <><circle cx="7" cy="5" r="2"/><circle cx="17" cy="5" r="2"/><ellipse cx="12" cy="14" rx="2.5" ry="3"/></> : <><path d="M4 4h6m4 2h6M7 6v2m10 0v2m-9 5q4-4 8 0"/></>}
     </g>
   </svg>;
 }
@@ -910,6 +909,7 @@ export default function MotionGallery({
                   tabIndex={open ? -1 : 0}
                   onClick={() => openArt(record)}
                   aria-label={`explore ${record.title} by ${record.artist}`}
+                  title={`${record.title} — ${record.artist}`}
                 >
                   <span className={s.thumbnailMask} data-motion-preview>
                   <img
@@ -920,6 +920,11 @@ export default function MotionGallery({
                     alt={record.alt}
                     style={{ width: `${100 / crop.width}%`, left: `${50 - crop.x * 100 / crop.width}%`, top: `${50 - crop.y * record.height / record.width * 100 / crop.width}%` }}
                   />
+                  <span className={s.hoverTitle} aria-hidden="true">{record.title}</span>
+                  </span>
+                  <span className={s.galleryLabel} aria-hidden="true">
+                    <strong>{record.title}</strong>
+                    <span>{record.artist}, {record.date}</span>
                   </span>
                   <span className={s.openHint} aria-hidden="true">meet the look ↗</span>
                   <span className={s.tileCaption} aria-hidden="true">
