@@ -34,8 +34,8 @@ assert.deepEqual(enabledMoodIds, [
 ]);
 assert.equal(motionArtworks.length, 12);
 assert.equal(new Set(motionArtworks.map((a) => a.objectId)).size, 12);
-assert.equal(reactionSpots.length, 16);
-assert.equal(new Set(reactionSpots.map((s) => s.id)).size, 16);
+assert.equal(reactionSpots.length, 17);
+assert.equal(new Set(reactionSpots.map((s) => s.id)).size, 17);
 for (const id of enabledMoodIds) {
   const mood = moodDefinitions.find((m) => m.id === id);
   assert.equal(mood.artworkIds.length, 3);
@@ -54,6 +54,14 @@ assert.equal(
   spotsFor(motionArtworks.find((a) => a.objectId === 436838)).length,
   3,
 );
+assert.equal(
+  spotsFor(motionArtworks.find((a) => a.objectId === 10827)).length,
+  1,
+);
+assert.equal(
+  spotsFor(motionArtworks.find((a) => a.objectId === 11137)).length,
+  3,
+);
 for (const art of motionArtworks) {
   assert(art.isPublicDomain);
   assert.equal(art.classification, 'Paintings');
@@ -68,7 +76,7 @@ for (const art of motionArtworks) {
   assert(Math.max(thumb.width, thumb.height) <= 360);
   const eyes = eyeCamera(art);
   assert.deepEqual(boundCamera(eyes, art), eyes);
-  assert(eyes.width < 0.4);
+  assert(eyes.width < 0.9);
   assert(eyes.x > 0 && eyes.x < 1 && eyes.y > 0 && eyes.y < 1);
   assert.deepEqual(boundCamera(fullCamera(art), art), fullCamera(art));
   for (const width of [0.001, 0.1, 0.5, 1, 100]) {

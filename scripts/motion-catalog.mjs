@@ -20,7 +20,7 @@ const selections = [
   },
   {
     objectId: 436838,
-    eyeCrop: { x: 0.545, y: 0.165, width: 0.12 },
+    eyeCrop: { x: 0.09, y: 0.09, width: 0.82 },
     alt: 'Five figures exchange sideways glances around a young man visiting a fortune-teller.',
   },
   {
@@ -40,12 +40,12 @@ const selections = [
   },
   {
     objectId: 436582,
-    eyeCrop: { x: 0.43, y: 0.235, width: 0.31 },
+    eyeCrop: { x: 0.35, y: 0.22, width: 0.42 },
     alt: 'A young woman tilts her head and looks upward, her wide eyes conveying uncertainty.',
   },
   {
     objectId: 437630,
-    eyeCrop: { x: 0.175, y: 0.125, width: 0.28 },
+    eyeCrop: { x: 0.17, y: 0.08, width: 0.5 },
     alt: 'Saint Matthew stops writing and looks upward toward an angel as if awaiting clarification.',
   },
   {
@@ -60,7 +60,7 @@ const selections = [
   },
   {
     objectId: 11137,
-    eyeCrop: { x: 0.34, y: 0.275, width: 0.13 },
+    eyeCrop: { x: 0.35, y: 0.36, width: 0.12 },
     alt: 'Three men brace themselves in a canoe as it plunges through foaming river rapids.',
   },
 ];
