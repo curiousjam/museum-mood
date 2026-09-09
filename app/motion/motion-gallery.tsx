@@ -768,6 +768,21 @@ export default function MotionGallery({
     };
   }, []);
   useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const previousHtmlBackground = html.style.backgroundColor;
+    const previousBodyBackground = body.style.backgroundColor;
+
+    // Keep the browser's overscroll canvas inside the exhibition palette.
+    html.style.backgroundColor = '#151d1c';
+    body.style.backgroundColor = '#151d1c';
+
+    return () => {
+      html.style.backgroundColor = previousHtmlBackground;
+      body.style.backgroundColor = previousBodyBackground;
+    };
+  }, []);
+  useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         '[data-motion-tile]',

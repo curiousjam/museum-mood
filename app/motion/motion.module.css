@@ -973,3 +973,34 @@
   .root[data-open='false'] .tile:nth-of-type(n+2) .artReaction { font-size: 1.25rem; }
   .alternateLabel { top: calc(78% - 36px); font-size: 1rem; }
 }
+
+/* The exhibition owns the whole scroll canvas, including artwork fallbacks. */
+.root {
+  min-height: 100dvh;
+  background-color: #151d1c;
+}
+.stage,
+.frame,
+.mask {
+  background-color: #151d1c;
+}
+.foot {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  margin-top: auto;
+  background: #151d1c;
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+}
+.root[data-open='true'] .surface {
+  padding-bottom: 72px;
+}
+@media (max-width: 760px) {
+  .root[data-open='true'] .surface {
+    padding-bottom: 110px;
+  }
+  .foot {
+    margin-inline: -18px;
+    padding-inline: 18px;
+  }
+}
