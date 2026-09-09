@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Museum Mood — Your reaction belongs in a museum',
-  description: 'Pick a mood. Make a masterpiece of a reaction. Eight public-domain paintings from The Met, ready for your caption.',
+  description:
+    'Your reaction belongs in a museum. Explore six public-domain paintings and ten expressions from The Met.',
 };
 
 export default function RootLayout({

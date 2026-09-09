@@ -1,0 +1,140 @@
+[
+  {
+    "objectId": 437531,
+    "eyeCrop": {
+      "x": 0.39,
+      "y": 0.218,
+      "width": 0.29
+    },
+    "alt": "A woman with arched brows looks directly at you, her expression quietly appraising.",
+    "thumbnail": "/art/motion/437531-thumbnail.jpg",
+    "image": "/art/motion/437531-image.jpg",
+    "width": 1880,
+    "height": 2400,
+    "title": "Portrait of a Woman, Probably Susanna Lunden (Susanna Fourment, 1599–1628)",
+    "artist": "Peter Paul Rubens",
+    "date": "ca. 1625–27",
+    "credit": "Gift of Mr. and Mrs. Charles Wrightsman, 1976",
+    "department": "European Paintings",
+    "classification": "Paintings",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-20395-001.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/437531",
+    "verifiedAt": "2026-09-09T06:01:39.920Z"
+  },
+  {
+    "objectId": 436120,
+    "eyeCrop": {
+      "x": 0.36,
+      "y": 0.132,
+      "width": 0.22
+    },
+    "alt": "An older woman in a white head covering fixes the viewer with a stern, narrowed gaze.",
+    "thumbnail": "/art/motion/436120-thumbnail.jpg",
+    "image": "/art/motion/436120-image.jpg",
+    "width": 1955,
+    "height": 2400,
+    "title": "The Old Italian Woman",
+    "artist": "Edgar Degas",
+    "date": "1857",
+    "credit": "Bequest of Charles Goldman, 1966",
+    "department": "European Paintings",
+    "classification": "Paintings",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-25458-001.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/436120",
+    "verifiedAt": "2026-09-09T06:01:40.421Z"
+  },
+  {
+    "objectId": 437397,
+    "eyeCrop": {
+      "x": 0.33,
+      "y": 0.292,
+      "width": 0.3
+    },
+    "alt": "Rembrandt looks out beneath furrowed brows, with tired eyes and a skeptical expression.",
+    "thumbnail": "/art/motion/437397-thumbnail.jpg",
+    "image": "/art/motion/437397-image.jpg",
+    "width": 1979,
+    "height": 2400,
+    "title": "Self-Portrait",
+    "artist": "Rembrandt (Rembrandt van Rijn)",
+    "date": "1660",
+    "credit": "Bequest of Benjamin Altman, 1913",
+    "department": "European Paintings",
+    "classification": "Paintings",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-16323-001.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/437397",
+    "verifiedAt": "2026-09-09T06:01:40.887Z"
+  },
+  {
+    "objectId": 436838,
+    "eyeCrop": {
+      "x": 0.545,
+      "y": 0.165,
+      "width": 0.12
+    },
+    "alt": "Five figures exchange sideways glances around a young man visiting a fortune-teller.",
+    "thumbnail": "/art/motion/436838-thumbnail.jpg",
+    "image": "/art/motion/436838-image.jpg",
+    "width": 2400,
+    "height": 1985,
+    "title": "The Fortune-Teller",
+    "artist": "Georges de La Tour",
+    "date": "probably 1630s",
+    "credit": "Rogers Fund, 1960",
+    "department": "European Paintings",
+    "classification": "Paintings",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-14286-015.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/436838",
+    "verifiedAt": "2026-09-09T06:01:41.388Z"
+  },
+  {
+    "objectId": 10827,
+    "eyeCrop": {
+      "x": 0.43,
+      "y": 0.145,
+      "width": 0.19
+    },
+    "alt": "A man in a dark suit stands with his hands in his pockets, looking down through his glasses.",
+    "thumbnail": "/art/motion/10827-thumbnail.jpg",
+    "image": "/art/motion/10827-image.jpg",
+    "width": 1244,
+    "height": 2400,
+    "title": "The Thinker: Portrait of Louis N. Kenton",
+    "artist": "Thomas Eakins",
+    "date": "1900",
+    "credit": "John Stewart Kennedy Fund, 1917",
+    "department": "The American Wing",
+    "classification": "Paintings",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/ad/original/DT102.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/10827",
+    "verifiedAt": "2026-09-09T06:01:41.587Z"
+  },
+  {
+    "objectId": 435997,
+    "eyeCrop": {
+      "x": 0.39,
+      "y": 0.325,
+      "width": 0.12
+    },
+    "alt": "Two young people run beneath a billowing cloth; she looks back while he looks toward her.",
+    "thumbnail": "/art/motion/435997-thumbnail.jpg",
+    "image": "/art/motion/435997-image.jpg",
+    "width": 1606,
+    "height": 2400,
+    "title": "The Storm",
+    "artist": "Pierre-Auguste Cot",
+    "date": "1880",
+    "credit": "Catharine Lorillard Wolfe Collection, Bequest of Catharine Lorillard Wolfe, 1887",
+    "department": "European Paintings",
+    "classification": "Paintings",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DT11964.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/435997",
+    "verifiedAt": "2026-09-09T06:01:41.876Z"
+  }
+]

@@ -6,6 +6,6 @@ export const artworks=catalog as MoodArtwork[];
 export const DEFAULT_MOOD: MoodId='judging';
 export const SITE_ORIGIN='https://museum-mood.becoming.chatgpt.site';
 export function resolveMood(value:unknown):MoodId{return MOOD_IDS.includes(value as MoodId)?value as MoodId:DEFAULT_MOOD}
-export function resultUrl(id:MoodId){return `${SITE_ORIGIN}/?mood=${id}`}
+export function resultUrl(id:MoodId){return `${SITE_ORIGIN}/classic/?mood=${id}`}
 export function shareText(id:MoodId){return `My reaction belongs in a museum.\n\nFind your Museum Mood: ${resultUrl(id)}`}
 export function composeUrl(id:MoodId){return `https://x.com/intent/post?text=${encodeURIComponent(shareText(id))}`}
