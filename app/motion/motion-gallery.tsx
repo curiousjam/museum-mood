@@ -14,8 +14,8 @@ import {
 import { flushSync } from 'react-dom';
 import { gsap } from 'gsap';
 import {
-  ArrowUp,
-  ArrowDown,
+  ArrowLeft,
+  ArrowRight,
   Minus,
   Plus,
   RotateCcw,
@@ -181,6 +181,7 @@ export default function MotionGallery({
   const open = phase !== 'cluster';
   const expressions = spotsFor(art);
   const expression = expressions[spotIndex] ?? expressions[0];
+  const tourArtworkIds = moods.flatMap((item) => item.artworkIds);
   function currentCamera() {
     const e = engine.current;
     return reactionCamera(
@@ -228,7 +229,7 @@ export default function MotionGallery({
     if (!frame.current || !mask.current || !painting.current || !e.w) return;
     const { pose, w, h, p } = e;
     const camera = driftCamera();
-    frame.current.style.transform = `translate3d(${pose.x}px,${pose.y + pose.swipe}px,0) scale(${pose.scale}) rotate(${pose.rotation}deg)`;
+    frame.current.style.transform = `translate3d(${pose.x + pose.swipe}px,${pose.y}px,0) scale(${pose.scale}) rotate(${pose.rotation}deg)`;
     mask.current.style.clipPath = `inset(${Math.max(0, (p - h) / 2) * pose.clip}px 0)`;
     const scale = 1 / camera.width;
     painting.current.style.transform = `translate3d(${w / 2 - camera.x * w * scale}px,${p / 2 - camera.y * ((w * e.art.height) / e.art.width) * scale}px,0) scale(${scale})`;
@@ -464,7 +465,7 @@ export default function MotionGallery({
     stop();
     points.current.clear();
     const currentId = e.pendingId || e.art.objectId;
-    const globalIds = moods.flatMap((item) => item.artworkIds);
+    const globalIds = tourArtworkIds;
     const globalIndex = Math.max(0, globalIds.indexOf(currentId));
     const id = acrossMoods
       ? globalIds[(globalIndex + direction + globalIds.length) % globalIds.length]
@@ -489,7 +490,7 @@ export default function MotionGallery({
       gsap.killTweensOf(e.pose);
       // Keep the current image on screen until the replacement has decoded.
       gsap.to(e.pose, {
-        swipe: -direction * e.h,
+        swipe: -direction * e.w,
         duration: e.reduced ? 0 : 0.16,
         ease: 'power2.in',
         onUpdate: paint,
@@ -509,7 +510,7 @@ export default function MotionGallery({
             scale: 1,
             rotation: 0,
             clip: 1,
-            swipe: direction * e.h,
+            swipe: direction * e.w,
           });
           flushSync(() => {
             setMood(destinationMood);
@@ -679,7 +680,7 @@ export default function MotionGallery({
         dy = p.y - g.start.y,
         now = event.timeStamp;
       if (e.phase === 'browsing')
-        e.pose.swipe = Math.max(-e.h, Math.min(e.h, dy));
+        e.pose.swipe = Math.max(-e.w, Math.min(e.w, dx));
       else
         Object.assign(
           e.camera,
@@ -694,7 +695,7 @@ export default function MotionGallery({
             e.art,
           ),
         );
-      g.velocity = (p.y - g.last.y) / Math.max(1, now - g.lastTime);
+      g.velocity = (p.x - g.last.x) / Math.max(1, now - g.lastTime);
       g.last = p;
       g.lastTime = now;
       paint();
@@ -713,8 +714,8 @@ export default function MotionGallery({
       const direction =
         event.type === 'pointercancel'
           ? 0
-          : swipeDirection(e.pose.swipe, velocity, e.h);
-      if (direction) void browse(direction);
+          : swipeDirection(e.pose.swipe, velocity, e.w);
+      if (direction) void browse(direction, true);
       else
         gsap.to(e.pose, {
           swipe: 0,
@@ -854,43 +855,36 @@ export default function MotionGallery({
     };
   }, [open]);
 
+  useEffect(() => {
+    const keyboard = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (
+        event.defaultPrevented ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.altKey ||
+        target?.closest('input, textarea, select, [contenteditable="true"], [role="radiogroup"]')
+      ) return;
+      if (event.key === 'Escape' && engine.current.phase !== 'cluster') {
+        event.preventDefault();
+        closeViewer();
+        return;
+      }
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      if (engine.current.phase === 'cluster') openArt(engine.current.art);
+      else void browse(event.key === 'ArrowRight' ? 1 : -1, true);
+    };
+    window.addEventListener('keydown', keyboard);
+    return () => window.removeEventListener('keydown', keyboard);
+  });
+
   return (
     <main
       ref={root}
       className={s.root}
       data-open={open}
       data-motion-paused={motionPaused}
-      onKeyDown={(event) => {
-        if ((event.target as HTMLElement).closest('[role="radiogroup"]'))
-          return;
-        if (!open) {
-          if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-            event.preventDefault();
-            openArt(art);
-          }
-          return;
-        }
-        if (event.key === 'Escape') {
-          event.preventDefault();
-          closeViewer();
-        }
-        if (event.key === 'ArrowRight') {
-          event.preventDefault();
-          void browse(1, true);
-        }
-        if (event.key === 'ArrowLeft') {
-          event.preventDefault();
-          void browse(-1, true);
-        }
-        if (event.key === 'ArrowUp') {
-          event.preventDefault();
-          void browse(1);
-        }
-        if (event.key === 'ArrowDown') {
-          event.preventDefault();
-          void browse(-1);
-        }
-      }}
     >
       <header className={s.header}>
         <a href="/" className={s.brand}>
@@ -976,7 +970,7 @@ export default function MotionGallery({
                 className={s.frame}
                 tabIndex={0}
                 title={`${art.title} — ${art.artist}`}
-                aria-label={`${art.title}. ${expression.label}. ${phase === 'exploring' ? 'drag to pan' : 'swipe up or down for another reaction'}. pinch or use controls to zoom.`}
+                aria-label={`${art.title}. ${expression.label}. ${phase === 'exploring' ? 'drag to pan' : 'swipe left or right for another painting'}. pinch or use controls to zoom.`}
                 onPointerDown={pointerDown}
                 onPointerMove={pointerMove}
                 onPointerUp={pointerUp}
@@ -1037,32 +1031,20 @@ export default function MotionGallery({
               <div className={s.controls} aria-label="painting controls">
                 <button
                   className={s.control}
-                  onClick={() => void browse(-1)}
-                  aria-label={
-                    expressions.length > 1
-                      ? 'previous expression'
-                      : 'previous painting'
-                  }
+                  onClick={() => void browse(-1, true)}
+                  aria-label="previous painting"
                 >
-                  <ArrowDown size={17} />
+                  <ArrowLeft size={17} />
                 </button>
                 <span className={s.hint} aria-live="polite">
-                  {expressions.length > 1
-                    ? spotIndex + 1
-                    : mood.artworkIds.indexOf(art.objectId) + 1}{' '}
-                  /{' '}
-                  {expressions.length > 1
-                    ? expressions.length
-                    : mood.artworkIds.length}
+                  {tourArtworkIds.indexOf(art.objectId) + 1} / {tourArtworkIds.length}
                 </span>
                 <button
                   className={s.control}
-                  onClick={() => void browse(1)}
-                  aria-label={
-                    expressions.length > 1 ? 'next expression' : 'next painting'
-                  }
+                  onClick={() => void browse(1, true)}
+                  aria-label="next painting"
                 >
-                  <ArrowUp size={17} />
+                  <ArrowRight size={17} />
                 </button>
                 <span className={s.divider} />
                 <button
