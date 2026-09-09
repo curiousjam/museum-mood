@@ -181,7 +181,21 @@ export default function MotionGallery({
   const open = phase !== 'cluster';
   const expressions = spotsFor(art);
   const expression = expressions[spotIndex] ?? expressions[0];
-  const tourArtworkIds = moods.flatMap((item) => item.artworkIds);
+  const tourStops = moods.flatMap((tourMood) =>
+    tourMood.artworkIds.flatMap((objectId) =>
+      spotsFor(getArtwork(objectId)).map((_, tourSpotIndex) => ({
+        mood: tourMood,
+        objectId,
+        spotIndex: tourSpotIndex,
+      })),
+    ),
+  );
+  const currentTourIndex = Math.max(
+    0,
+    tourStops.findIndex(
+      (stop) => stop.objectId === art.objectId && stop.spotIndex === spotIndex,
+    ),
+  );
   function currentCamera() {
     const e = engine.current;
     return reactionCamera(
@@ -465,14 +479,29 @@ export default function MotionGallery({
     stop();
     points.current.clear();
     const currentId = e.pendingId || e.art.objectId;
-    const globalIds = tourArtworkIds;
-    const globalIndex = Math.max(0, globalIds.indexOf(currentId));
-    const id = acrossMoods
-      ? globalIds[(globalIndex + direction + globalIds.length) % globalIds.length]
-      : nextArtwork(e.mood, currentId, direction);
-    const destinationMood = acrossMoods
-      ? moods.find((item) => item.artworkIds.includes(id)) ?? e.mood
-      : e.mood;
+    const currentStopIndex = Math.max(
+      0,
+      tourStops.findIndex(
+        (stop) =>
+          stop.objectId === currentId && stop.spotIndex === e.spotIndex,
+      ),
+    );
+    const destinationStop = acrossMoods
+      ? tourStops[
+          (currentStopIndex + direction + tourStops.length) % tourStops.length
+        ]
+      : null;
+    if (
+      destinationStop &&
+      destinationStop.objectId === e.art.objectId &&
+      !e.pendingId
+    ) {
+      selectSpot(destinationStop.spotIndex);
+      return;
+    }
+    const id = destinationStop?.objectId ?? nextArtwork(e.mood, currentId, direction);
+    const destinationMood = destinationStop?.mood ?? e.mood;
+    const destinationSpotIndex = destinationStop?.spotIndex ?? 0;
     e.pendingId = id;
     const record = getArtwork(id),
       request = ++e.request;
@@ -497,13 +526,16 @@ export default function MotionGallery({
         onComplete: () => {
           if (request !== e.request) return;
           e.art = record;
-          e.spotIndex = 0;
-          setSpotIndex(0);
+          e.spotIndex = destinationSpotIndex;
+          setSpotIndex(destinationSpotIndex);
           setShowSpots(false);
           e.pendingId = 0;
           e.mood = destinationMood;
           remembered.current.set(destinationMood.id, id);
-          Object.assign(e.camera, reactionCamera(record, spotsFor(record)[0]));
+          Object.assign(
+            e.camera,
+            reactionCamera(record, spotsFor(record)[destinationSpotIndex]),
+          );
           Object.assign(e.pose, {
             x: 0,
             y: 0,
@@ -1047,17 +1079,17 @@ export default function MotionGallery({
                 <button
                   className={s.control}
                   onClick={() => void browse(-1, true)}
-                  aria-label="previous painting"
+                  aria-label="previous reaction"
                 >
                   <ArrowLeft size={17} />
                 </button>
                 <span className={s.hint} aria-live="polite">
-                  {tourArtworkIds.indexOf(art.objectId) + 1} / {tourArtworkIds.length}
+                  {currentTourIndex + 1} / {tourStops.length}
                 </span>
                 <button
                   className={s.control}
                   onClick={() => void browse(1, true)}
-                  aria-label="next painting"
+                  aria-label="next reaction"
                 >
                   <ArrowRight size={17} />
                 </button>
