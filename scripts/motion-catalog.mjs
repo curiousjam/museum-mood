@@ -24,14 +24,44 @@ const selections = [
     alt: 'Five figures exchange sideways glances around a young man visiting a fortune-teller.',
   },
   {
+    objectId: 12072,
+    eyeCrop: { x: 0.34, y: 0.215, width: 0.31 },
+    alt: 'An Egyptian woman in a dark head covering regards the viewer with a direct, sideways glance.',
+  },
+  {
+    objectId: 438407,
+    eyeCrop: { x: 0.405, y: 0.205, width: 0.31 },
+    alt: 'A man in a brown cap pauses with a jug in his hands and glances sharply to one side.',
+  },
+  {
     objectId: 10827,
     eyeCrop: { x: 0.43, y: 0.145, width: 0.19 },
     alt: 'A man in a dark suit stands with his hands in his pockets, looking down through his glasses.',
   },
   {
+    objectId: 436582,
+    eyeCrop: { x: 0.43, y: 0.235, width: 0.31 },
+    alt: 'A young woman tilts her head and looks upward, her wide eyes conveying uncertainty.',
+  },
+  {
+    objectId: 437630,
+    eyeCrop: { x: 0.175, y: 0.125, width: 0.28 },
+    alt: 'Saint Matthew stops writing and looks upward toward an angel as if awaiting clarification.',
+  },
+  {
     objectId: 435997,
     eyeCrop: { x: 0.39, y: 0.325, width: 0.12 },
     alt: 'Two young people run beneath a billowing cloth; she looks back while he looks toward her.',
+  },
+  {
+    objectId: 435807,
+    eyeCrop: { x: 0.285, y: 0.17, width: 0.19 },
+    alt: 'A startled man stares wide-eyed with his mouth open while four companions crowd around him.',
+  },
+  {
+    objectId: 11137,
+    eyeCrop: { x: 0.34, y: 0.275, width: 0.13 },
+    alt: 'Three men brace themselves in a canoe as it plunges through foaming river rapids.',
   },
 ];
 const verify = process.argv.includes('--verify');

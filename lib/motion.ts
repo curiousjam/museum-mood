@@ -19,9 +19,9 @@ export type Phase =
 const emojis = ['😂', '😌', '🤨', '😒', '😵‍💫', '🫠', '😱', '😎'];
 const moodArt: Partial<Record<MoodId, number[]>> = {
   judging: [437531, 436120, 437397],
-  suspicious: [436838],
-  confused: [10827],
-  panicking: [435997],
+  suspicious: [436838, 12072, 438407],
+  confused: [10827, 436582, 437630],
+  panicking: [435997, 435807, 11137],
 };
 export const motionArtworks: ArtworkRecord[] = catalog;
 export const moodDefinitions: MoodDefinition[] = MOOD_IDS.map((id, i) => ({
@@ -69,6 +69,8 @@ export const reactionSpots: ReactionSpot[] = [
     label: 'checking the context',
     crop: { x: 0.14, y: 0.175, width: 0.095 },
   },
+  { id: 'not-convinced', objectId: 12072, label: 'not convinced' },
+  { id: 'what-was-that', objectId: 438407, label: 'what was that?' },
   { id: 'processing', objectId: 10827, label: 'processing…' },
   {
     id: 'one-email',
@@ -76,6 +78,8 @@ export const reactionSpots: ReactionSpot[] = [
     label: 'that meeting could’ve been an email',
     full: true,
   },
+  { id: 'trying-to-follow', objectId: 436582, label: 'trying to follow' },
+  { id: 'one-more-time', objectId: 437630, label: 'one more time?' },
   {
     id: 'we-should-leave',
     objectId: 435997,
@@ -88,6 +92,8 @@ export const reactionSpots: ReactionSpot[] = [
     label: 'wait what',
     crop: { x: 0.39, y: 0.325, width: 0.12 },
   },
+  { id: 'this-is-fine', objectId: 435807, label: 'this is fine' },
+  { id: 'hold-on', objectId: 11137, label: 'hold on' },
 ];
 export function spotsFor(art: ArtworkRecord) {
   return reactionSpots.filter((spot) => spot.objectId === art.objectId);

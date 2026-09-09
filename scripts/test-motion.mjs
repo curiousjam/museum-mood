@@ -32,13 +32,13 @@ assert.deepEqual(enabledMoodIds, [
   'confused',
   'panicking',
 ]);
-assert.equal(motionArtworks.length, 6);
-assert.equal(new Set(motionArtworks.map((a) => a.objectId)).size, 6);
-assert.equal(reactionSpots.length, 10);
-assert.equal(new Set(reactionSpots.map((s) => s.id)).size, 10);
+assert.equal(motionArtworks.length, 12);
+assert.equal(new Set(motionArtworks.map((a) => a.objectId)).size, 12);
+assert.equal(reactionSpots.length, 16);
+assert.equal(new Set(reactionSpots.map((s) => s.id)).size, 16);
 for (const id of enabledMoodIds) {
   const mood = moodDefinitions.find((m) => m.id === id);
-  assert(mood.artworkIds.length >= 1 && mood.artworkIds.length <= 3);
+  assert.equal(mood.artworkIds.length, 3);
   assert(mood.artworkIds.includes(mood.featuredArtworkId));
   for (const artId of mood.artworkIds)
     assert(motionArtworks.some((a) => a.objectId === artId));

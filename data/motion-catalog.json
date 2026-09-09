@@ -20,7 +20,7 @@
     "isPublicDomain": true,
     "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-20395-001.jpg",
     "source": "https://www.metmuseum.org/art/collection/search/437531",
-    "verifiedAt": "2026-09-09T06:01:39.920Z"
+    "verifiedAt": "2026-09-09T15:04:09.208Z"
   },
   {
     "objectId": 436120,
@@ -43,7 +43,7 @@
     "isPublicDomain": true,
     "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-25458-001.jpg",
     "source": "https://www.metmuseum.org/art/collection/search/436120",
-    "verifiedAt": "2026-09-09T06:01:40.421Z"
+    "verifiedAt": "2026-09-09T15:04:09.711Z"
   },
   {
     "objectId": 437397,
@@ -66,7 +66,7 @@
     "isPublicDomain": true,
     "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-16323-001.jpg",
     "source": "https://www.metmuseum.org/art/collection/search/437397",
-    "verifiedAt": "2026-09-09T06:01:40.887Z"
+    "verifiedAt": "2026-09-09T15:04:10.262Z"
   },
   {
     "objectId": 436838,
@@ -89,7 +89,53 @@
     "isPublicDomain": true,
     "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-14286-015.jpg",
     "source": "https://www.metmuseum.org/art/collection/search/436838",
-    "verifiedAt": "2026-09-09T06:01:41.388Z"
+    "verifiedAt": "2026-09-09T15:04:10.788Z"
+  },
+  {
+    "objectId": 12072,
+    "eyeCrop": {
+      "x": 0.34,
+      "y": 0.215,
+      "width": 0.31
+    },
+    "alt": "An Egyptian woman in a dark head covering regards the viewer with a direct, sideways glance.",
+    "thumbnail": "/art/motion/12072-thumbnail.jpg",
+    "image": "/art/motion/12072-image.jpg",
+    "width": 2019,
+    "height": 2400,
+    "title": "Egyptian Woman",
+    "artist": "John Singer Sargent",
+    "date": "1890–91",
+    "credit": "Gift of Mrs. Francis Ormond, 1950",
+    "department": "The American Wing",
+    "classification": "Paintings",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/ad/original/DT212007.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/12072",
+    "verifiedAt": "2026-09-09T15:04:11.071Z"
+  },
+  {
+    "objectId": 438407,
+    "eyeCrop": {
+      "x": 0.405,
+      "y": 0.205,
+      "width": 0.31
+    },
+    "alt": "A man in a brown cap pauses with a jug in his hands and glances sharply to one side.",
+    "thumbnail": "/art/motion/438407-thumbnail.jpg",
+    "image": "/art/motion/438407-image.jpg",
+    "width": 1892,
+    "height": 2400,
+    "title": "Man Holding a Jug",
+    "artist": "Michiel Sweerts",
+    "date": "ca. 1660",
+    "credit": "Gift of Herman and Lila Shickman, 2001",
+    "department": "European Paintings",
+    "classification": "Paintings",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-25892-001.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/438407",
+    "verifiedAt": "2026-09-09T15:04:11.379Z"
   },
   {
     "objectId": 10827,
@@ -112,7 +158,53 @@
     "isPublicDomain": true,
     "primaryImage": "https://images.metmuseum.org/CRDImages/ad/original/DT102.jpg",
     "source": "https://www.metmuseum.org/art/collection/search/10827",
-    "verifiedAt": "2026-09-09T06:01:41.587Z"
+    "verifiedAt": "2026-09-09T15:04:11.652Z"
+  },
+  {
+    "objectId": 436582,
+    "eyeCrop": {
+      "x": 0.43,
+      "y": 0.235,
+      "width": 0.31
+    },
+    "alt": "A young woman tilts her head and looks upward, her wide eyes conveying uncertainty.",
+    "thumbnail": "/art/motion/436582-thumbnail.jpg",
+    "image": "/art/motion/436582-image.jpg",
+    "width": 1937,
+    "height": 2400,
+    "title": "Head of a Young Woman",
+    "artist": "Jean-Baptiste Greuze",
+    "date": "possibly 1780s",
+    "credit": "Bequest of Miss Adelaide Milton de Groot (1876-1967), 1967",
+    "department": "European Paintings",
+    "classification": "Paintings",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-18078-001.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/436582",
+    "verifiedAt": "2026-09-09T15:04:11.943Z"
+  },
+  {
+    "objectId": 437630,
+    "eyeCrop": {
+      "x": 0.175,
+      "y": 0.125,
+      "width": 0.28
+    },
+    "alt": "Saint Matthew stops writing and looks upward toward an angel as if awaiting clarification.",
+    "thumbnail": "/art/motion/437630-thumbnail.jpg",
+    "image": "/art/motion/437630-image.jpg",
+    "width": 2400,
+    "height": 1811,
+    "title": "Saint Matthew and the Angel",
+    "artist": "Giovanni Gerolamo Savoldo",
+    "date": "",
+    "credit": "Marquand Fund, 1912",
+    "department": "European Paintings",
+    "classification": "Paintings",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-26762-001.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/437630",
+    "verifiedAt": "2026-09-09T15:04:12.421Z"
   },
   {
     "objectId": 435997,
@@ -135,6 +227,52 @@
     "isPublicDomain": true,
     "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DT11964.jpg",
     "source": "https://www.metmuseum.org/art/collection/search/435997",
-    "verifiedAt": "2026-09-09T06:01:41.876Z"
+    "verifiedAt": "2026-09-09T15:04:12.868Z"
+  },
+  {
+    "objectId": 435807,
+    "eyeCrop": {
+      "x": 0.285,
+      "y": 0.17,
+      "width": 0.19
+    },
+    "alt": "A startled man stares wide-eyed with his mouth open while four companions crowd around him.",
+    "thumbnail": "/art/motion/435807-thumbnail.jpg",
+    "image": "/art/motion/435807-image.jpg",
+    "width": 1922,
+    "height": 2400,
+    "title": "The Smokers",
+    "artist": "Adriaen Brouwer",
+    "date": "ca. 1636",
+    "credit": "The Friedsam Collection, Bequest of Michael Friedsam, 1931",
+    "department": "European Paintings",
+    "classification": "Paintings",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-15904-001.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/435807",
+    "verifiedAt": "2026-09-09T15:04:13.358Z"
+  },
+  {
+    "objectId": 11137,
+    "eyeCrop": {
+      "x": 0.34,
+      "y": 0.275,
+      "width": 0.13
+    },
+    "alt": "Three men brace themselves in a canoe as it plunges through foaming river rapids.",
+    "thumbnail": "/art/motion/11137-thumbnail.jpg",
+    "image": "/art/motion/11137-image.jpg",
+    "width": 2400,
+    "height": 1494,
+    "title": "Shooting the Rapids, Saguenay River",
+    "artist": "Winslow Homer",
+    "date": "1905–10",
+    "credit": "Gift of Charles S. Homer, 1911",
+    "department": "The American Wing",
+    "classification": "Paintings",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/ad/original/ap11.57.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/11137",
+    "verifiedAt": "2026-09-09T15:04:13.685Z"
   }
 ]

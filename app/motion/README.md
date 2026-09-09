@@ -5,7 +5,7 @@ The default route `/` and alternate `/motion` route show the motion gallery. The
 ## Collection and interactions
 
 - Six verified public-domain Met paintings, four enabled moods, ten labeled expressions.
-- Judging: Rubens, Degas and Rembrandt; suspicious: three faces in The Fortune-Teller; confused: The Thinker close-up/full-body reveal; panicking: The Storm close-up/paired reaction.
+- Every enabled mood now has three paintings: judging (Rubens, Degas, Rembrandt), suspicious (Georges de La Tour, Sargent, Sweerts), confused (Eakins, Greuze, Savoldo), and panicking (Cot, Brouwer, Homer).
 - Hover magnification is desktop-only, 22%, 240ms. Reduced motion disables it.
 - Within a painting, expression selection and swiping animate the camera instead of replacing the image. Full-painting view shows numbered face targets for the landscape multi-face work.
 - Pointer pinch/pan, Safari gesture compatibility, trackpad wheel pinch, keyboard navigation, focus restoration, loading/retry states and reduced motion are supported.
