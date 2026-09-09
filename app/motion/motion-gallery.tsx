@@ -920,10 +920,6 @@ export default function MotionGallery({
                   />
                   <span className={s.hoverTitle} aria-hidden="true">{record.title}</span>
                   </span>
-                  <span className={s.galleryLabel} aria-hidden="true">
-                    <strong>{record.title}</strong>
-                    <span>{record.artist}, {record.date}</span>
-                  </span>
                   <span className={s.openHint} aria-hidden="true">look closer ↗</span>
                   <span className={s.tileCaption} aria-hidden="true">
                     <span className={s.artReaction}>{record.objectId === 437397 ? 'be serious.' : spotsFor(record)[0]?.label}</span>
