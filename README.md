@@ -23,7 +23,7 @@ node scripts/test-exports.mjs
 npm run build
 ```
 
-The static export is written to `out/`. There is no runtime API, authentication, tracking, or database. Share links use `?mood=judging` (and the other seven mood IDs). X compose receives text; users attach the downloaded JPEG manually.
+The static export is written to `dist/client/`. There is no runtime API, authentication, tracking, or database. Share links use `?mood=judging` (and the other seven mood IDs). X compose receives text; users attach the downloaded JPEG manually.
 
 ## Artwork data
 
