@@ -8,11 +8,22 @@ import {
   useEffect,
   useRef,
   useState,
+  type CSSProperties,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 import { flushSync } from 'react-dom';
 import { gsap } from 'gsap';
-import { ArrowUp, ArrowDown, Minus, Plus, X, RotateCcw } from 'lucide-react';
+import {
+  ArrowUp,
+  ArrowDown,
+  Minus,
+  Plus,
+  X,
+  RotateCcw,
+  Pause,
+  Play,
+  ArrowUpRight,
+} from 'lucide-react';
 import {
   enabledMoods,
   motionArtworks,
@@ -108,6 +119,8 @@ export default function MotionGallery({
   const [failed, setFailed] = useState(false);
   const [spotIndex, setSpotIndex] = useState(0);
   const [showSpots, setShowSpots] = useState(false);
+  const [motionPaused, setMotionPaused] = useState(false);
+  const root = useRef<HTMLElement>(null);
   const markers = useRef(new Map<string, HTMLButtonElement>());
   const stage = useRef<HTMLDivElement>(null),
     target = useRef<HTMLDivElement>(null),
@@ -132,6 +145,7 @@ export default function MotionGallery({
   });
   const remembered = useRef(new Map<MoodId, number>());
   const cache = useRef(new Map<number, Promise<string>>());
+  const drift = useRef({ amount: 0 });
   const retryAction = useRef<() => void>(() => {});
   const points = useRef(new Map<number, Point>());
   const gesture = useRef({
@@ -155,7 +169,12 @@ export default function MotionGallery({
     );
   }
   function selectSpot(index: number) {
-    if([...markers.current.values()].some(marker=>marker===document.activeElement))frame.current?.focus({preventScroll:true});
+    if (
+      [...markers.current.values()].some(
+        (marker) => marker === document.activeElement,
+      )
+    )
+      frame.current?.focus({ preventScroll: true });
     const e = engine.current;
     const list = spotsFor(e.art);
     e.spotIndex = (index + list.length) % list.length;
@@ -168,13 +187,27 @@ export default function MotionGallery({
     setPhase(next);
   }
   function stop() {
+    settleDrift();
     gsap.killTweensOf(engine.current.camera);
     gsap.killTweensOf(engine.current.pose);
+  }
+  function driftCamera(): Camera {
+    const e = engine.current;
+    return {
+      ...e.camera,
+      width: e.camera.width * (1 - drift.current.amount * 0.025),
+    };
+  }
+  function settleDrift() {
+    gsap.killTweensOf(drift.current);
+    Object.assign(engine.current.camera, driftCamera());
+    drift.current.amount = 0;
   }
   function paint() {
     const e = engine.current;
     if (!frame.current || !mask.current || !painting.current || !e.w) return;
-    const { pose, camera, w, h, p } = e;
+    const { pose, w, h, p } = e;
+    const camera = driftCamera();
     frame.current.style.transform = `translate3d(${pose.x}px,${pose.y + pose.swipe}px,0) scale(${pose.scale}) rotate(${pose.rotation}deg)`;
     mask.current.style.clipPath = `inset(${Math.max(0, (p - h) / 2) * pose.clip}px 0)`;
     const scale = 1 / camera.width;
@@ -684,6 +717,7 @@ export default function MotionGallery({
     });
     if (stage.current) resize.observe(stage.current);
     const visibility = () => {
+      root.current?.setAttribute('data-hidden', String(document.hidden));
       if (document.hidden) {
         gsap.getTweensOf([e.camera, e.pose]).forEach((t) => t.progress(1));
         points.current.clear();
@@ -715,6 +749,32 @@ export default function MotionGallery({
     }, cluster);
     return () => ctx.revert();
   }, [mood.id]);
+  useEffect(() => {
+    if (phase !== 'browsing' || motionPaused) return;
+    const media = matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => {
+      settleDrift();
+      if (!media.matches && !document.hidden) {
+        gsap.to(drift.current, {
+          amount: 1,
+          duration: 7,
+          delay: 0.45,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+          onUpdate: paint,
+        });
+      }
+    };
+    update();
+    media.addEventListener('change', update);
+    document.addEventListener('visibilitychange', update);
+    return () => {
+      settleDrift();
+      media.removeEventListener('change', update);
+      document.removeEventListener('visibilitychange', update);
+    };
+  }, [phase, art.objectId, spotIndex, motionPaused]);
   useEffect(() => {
     if (!open || !frame.current) return;
     const node = frame.current;
@@ -761,7 +821,10 @@ export default function MotionGallery({
 
   return (
     <main
+      ref={root}
       className={s.root}
+      data-open={open}
+      data-motion-paused={motionPaused}
       onKeyDown={(event) => {
         if (!open) return;
         if (event.key === 'Escape') {
@@ -782,6 +845,9 @@ export default function MotionGallery({
     >
       <header className={s.header}>
         <a href="/" className={s.brand}>
+          <span className={s.brandMark} aria-hidden="true">
+            m.
+          </span>{' '}
           museum mood
         </a>
         <a className={s.edition} href={`/classic?mood=${mood.id}`}>
@@ -789,9 +855,18 @@ export default function MotionGallery({
         </a>
       </header>
       <section className={s.surface} aria-label="painting explorer">
-        <h1 className={s.heading}>how are we feeling?</h1>
+        <p className={s.kicker}>old masters. extremely online.</p>
+        <h1 className={s.heading}>
+          how are we <em>feeling?</em>
+        </h1>
         <MoodDock moods={moods} selected={mood.id} onSelect={chooseMood} />
         <div className={s.stage} ref={stage}>
+          <div className={s.stageLabel} aria-hidden="true">
+            <span>the {mood.label} collection</span>
+            <span>
+              {String(mood.artworkIds.length).padStart(2, '0')} works ↘
+            </span>
+          </div>
           <div
             className={s.cluster}
             ref={cluster}
@@ -802,13 +877,14 @@ export default function MotionGallery({
               pointerEvents: open ? 'none' : 'auto',
             }}
           >
-            {mood.artworkIds.map((id) => {
+            {mood.artworkIds.map((id, index) => {
               const record = getArtwork(id);
               return (
                 <button
                   data-motion-tile
                   key={id}
                   className={s.tile}
+                  style={{ '--art-ratio': record.width / record.height } as CSSProperties}
                   ref={(el) => {
                     if (el) tiles.current.set(id, el);
                     else tiles.current.delete(id);
@@ -823,6 +899,13 @@ export default function MotionGallery({
                     height={record.height}
                     alt={record.alt}
                   />
+                  <span className={s.tileCaption} aria-hidden="true">
+                    <span>
+                      {String(index + 1).padStart(2, '0')} /{' '}
+                      {record.artist.split(' ').at(-1)?.toLowerCase()}
+                    </span>
+                    <ArrowUpRight size={15} />
+                  </span>
                 </button>
               );
             })}
@@ -868,7 +951,8 @@ export default function MotionGallery({
                     }}
                   />
                 </div>
-                {showSpots && art.width>art.height &&
+                {showSpots &&
+                  art.width > art.height &&
                   expressions.length > 1 &&
                   expressions
                     .filter((spot) => !spot.full)
@@ -895,15 +979,17 @@ export default function MotionGallery({
         <div className={s.below}>
           {!open ? (
             <p className={s.hint}>
-              {mood.id === 'judging'
-                ? 'three very old opinions.'
-                : mood.id === 'suspicious'
-                  ? 'everyone has a take.'
-                  : mood.id === 'confused'
-                    ? 'still processing.'
-                    : 'a perfectly normal response.'}
+              <span className={s.hintTitle}>
+                {mood.id === 'judging'
+                  ? 'three very old opinions.'
+                  : mood.id === 'suspicious'
+                    ? 'everyone has a take.'
+                    : mood.id === 'confused'
+                      ? 'still processing.'
+                      : 'a perfectly normal response.'}
+              </span>
               <br />
-              tap a painting. get a closer look.
+              pick a face. there’s a lot going on.
             </p>
           ) : (
             <>
@@ -945,7 +1031,7 @@ export default function MotionGallery({
                       ? selectSpot(0)
                       : animateCamera(currentCamera(), 'browsing')
                   }
-                  aria-pressed={phase === 'browsing'&&!expression.full}
+                  aria-pressed={phase === 'browsing' && !expression.full}
                 >
                   eyes
                 </button>
@@ -1030,6 +1116,17 @@ export default function MotionGallery({
       </section>
       <footer className={s.foot}>
         <span>old art. current feelings.</span>
+        <button
+          className={s.motionToggle}
+          onClick={() => setMotionPaused(!motionPaused)}
+          aria-pressed={motionPaused}
+          aria-label={
+            motionPaused ? 'resume ambient motion' : 'pause ambient motion'
+          }
+        >
+          {motionPaused ? <Play size={13} /> : <Pause size={13} />}{' '}
+          {motionPaused ? 'motion paused' : 'motion on'}
+        </button>
         <a
           href={
             open ? art.source : 'https://www.metmuseum.org/hubs/open-access'

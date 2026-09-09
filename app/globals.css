@@ -2,6 +2,8 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
+:root { --motion-paper: #f7f8ff; --motion-ink: #183cf0; --motion-line: #183cf026; --motion-display: Georgia, 'Times New Roman', serif; }
+
 @theme inline { --color-background:var(--background); --color-foreground:var(--foreground); --color-primary:var(--primary); --color-primary-foreground:var(--primary-foreground); --color-border:var(--border); --color-input:var(--border); --color-ring:var(--primary); --color-muted:var(--muted); --color-muted-foreground:var(--muted-foreground); --radius-lg:.25rem; }
 :root,.dark { --background:#f5f4f0; --foreground:#171714; --primary:#171714; --primary-foreground:#f8f7f2; --border:#d9d8d2; --muted:#ecebe6; --muted-foreground:#75756f; --accent:#e85d50; }
 *{box-sizing:border-box}
