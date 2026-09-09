@@ -892,6 +892,7 @@
 }
 @media (max-width: 1099px) { .dockLabel { margin-top: 2px; } }
 .foot { font-size: .82rem; color: #d0d9d3; }
+.keyHint { margin-left: auto; color: #dbff82; letter-spacing: .04em; }
 .openHint { border: 1px solid #dbff8266; padding: 10px 13px; color: #dbff82; text-transform: uppercase; letter-spacing: .06em; font-size: .72rem; }
 .hoverTitle { position: absolute; left: 14px; bottom: 14px; max-width: calc(100% - 28px); padding: 8px 10px; background: #101715de; color: #f4f4ec; font: 500 .78rem/1.25 var(--font-geist-sans), sans-serif; opacity: 0; translate: 0 5px; transition: opacity 180ms ease, translate 180ms ease; text-align: left; }
 .viewerTitle { position: absolute; left: 16px; bottom: 16px; z-index: 4; max-width: calc(100% - 32px); padding: 10px 12px; background: #101715e8; color: #f4f4ec; opacity: 0; translate: 0 6px; transition: opacity 180ms ease, translate 180ms ease; pointer-events: none; text-align: left; }
@@ -931,6 +932,7 @@
   .root[data-open='false'] .tile:nth-of-type(n+2) .artReaction { font-size: 1.1rem; }
   .foot { gap: 12px; padding: 16px 0; font-size: .75rem; }
   .foot > .signature { display: inline-flex; justify-content: flex-start; }
+  .keyHint { display: none; }
 }
 
 /* Keep desktop metadata and related works in separate vertical bands. */

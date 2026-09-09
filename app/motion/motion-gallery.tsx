@@ -448,16 +448,24 @@ export default function MotionGallery({
       },
     });
   }
-  async function browse(direction: number) {
+  async function browse(direction: number, acrossMoods = false) {
     const e = engine.current;
     if (e.phase === 'cluster' || e.phase === 'closing') return;
-    if (spotsFor(e.art).length > 1) {
+    if (!acrossMoods && spotsFor(e.art).length > 1) {
       selectSpot(e.spotIndex + direction);
       return;
     }
     stop();
     points.current.clear();
-    const id = nextArtwork(e.mood, e.pendingId || e.art.objectId, direction);
+    const currentId = e.pendingId || e.art.objectId;
+    const globalIds = moods.flatMap((item) => item.artworkIds);
+    const globalIndex = Math.max(0, globalIds.indexOf(currentId));
+    const id = acrossMoods
+      ? globalIds[(globalIndex + direction + globalIds.length) % globalIds.length]
+      : nextArtwork(e.mood, currentId, direction);
+    const destinationMood = acrossMoods
+      ? moods.find((item) => item.artworkIds.includes(id)) ?? e.mood
+      : e.mood;
     e.pendingId = id;
     const record = getArtwork(id),
       request = ++e.request;
@@ -486,8 +494,9 @@ export default function MotionGallery({
           setSpotIndex(0);
           setShowSpots(false);
           e.pendingId = 0;
-          remembered.current.set(e.mood.id, id);
-          Object.assign(e.camera, eyeCamera(record));
+          e.mood = destinationMood;
+          remembered.current.set(destinationMood.id, id);
+          Object.assign(e.camera, reactionCamera(record, spotsFor(record)[0]));
           Object.assign(e.pose, {
             x: 0,
             y: 0,
@@ -497,6 +506,7 @@ export default function MotionGallery({
             swipe: direction * e.h,
           });
           flushSync(() => {
+            setMood(destinationMood);
             setArt(record);
             setSrc(detail);
             changePhase('browsing');
@@ -845,18 +855,32 @@ export default function MotionGallery({
       data-open={open}
       data-motion-paused={motionPaused}
       onKeyDown={(event) => {
-        if (!open) return;
+        if ((event.target as HTMLElement).closest('[role="radiogroup"]'))
+          return;
+        if (!open) {
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            event.preventDefault();
+            openArt(art);
+          }
+          return;
+        }
         if (event.key === 'Escape') {
           event.preventDefault();
           closeViewer();
         }
-        if ((event.target as HTMLElement).closest('[role="radiogroup"]'))
-          return;
-        if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          void browse(1, true);
+        }
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          void browse(-1, true);
+        }
+        if (event.key === 'ArrowUp') {
           event.preventDefault();
           void browse(1);
         }
-        if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
+        if (event.key === 'ArrowDown') {
           event.preventDefault();
           void browse(-1);
         }
@@ -1122,6 +1146,7 @@ export default function MotionGallery({
       </section>
       <footer className={s.foot}>
         <span className={s.signature}>old art. current feelings. <a href="https://x.com/jezamancenido" target="_blank" rel="noreferrer">@jezamancenido ↗</a></span>
+        <span className={s.keyHint} aria-hidden="true">← → eye tour</span>
         <button
           className={s.motionToggle}
           onClick={() => setMotionPaused(!motionPaused)}
