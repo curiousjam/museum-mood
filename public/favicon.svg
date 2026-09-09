@@ -1,1 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#151d1c"/><path d="M8 32s9-16 24-16 24 16 24 16-9 16-24 16S8 32 8 32Z" fill="#dbff82"/><circle cx="32" cy="32" r="10" fill="#151d1c"/><circle cx="32" cy="32" r="4" fill="#dbff82"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <text x="32" y="48" text-anchor="middle" font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif" font-size="52">👁️</text>
+</svg>
