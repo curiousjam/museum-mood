@@ -4,9 +4,9 @@
 
 the first thing an agent makes is rarely the interesting part.
 
-the interesting part is the iteration—when it stops feeling generated and starts feeling like yours.
+the interesting part is the iteration—when it starts to feel like yours.
 
-i started with a meme generator. ended with a tiny museum where you look old paintings in the eyes.
+i started with a meme generator. somehow ended with a tiny museum for looking old paintings in the eyes.
 
 https://museum-mood.becoming.chatgpt.site
 
