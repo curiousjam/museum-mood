@@ -1179,6 +1179,15 @@ export default function MotionGallery({
           </output>
         </div>
       </section>
+      <button
+        className={s.fab}
+        type="button"
+        aria-label={open ? 'close the close-up' : 'look closer'}
+        title={open ? 'close the close-up' : 'look closer'}
+        onClick={() => (open ? closeViewer() : openArt(engine.current.art))}
+      >
+        <span aria-hidden="true">👁️</span>
+      </button>
       <footer className={s.foot}>
         <span className={s.signature}>old art. current feelings. <a href="https://x.com/jezamancenido" target="_blank" rel="noreferrer">@jezamancenido ↗</a></span>
         <span className={s.keyHint} aria-hidden="true">← → eye tour</span>

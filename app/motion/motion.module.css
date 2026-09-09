@@ -77,6 +77,31 @@
   align-items: center;
   border-top: 1px solid var(--motion-line);
 }
+.fab {
+  position: fixed;
+  right: clamp(18px, 3vw, 42px);
+  bottom: clamp(76px, 8vh, 104px);
+  z-index: 25;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid #dbff8266;
+  border-radius: 50%;
+  background: #151d1cf2;
+  color: #f1f1e9;
+  font-size: 1.35rem;
+  line-height: 1;
+  box-shadow: 0 8px 24px #0005;
+  cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease;
+}
+.fab:hover { transform: translateY(-3px); background: #24302df2; }
+.fab:active { transform: translateY(0); }
+@media (max-width: 760px) {
+  .fab { right: 18px; bottom: 92px; width: 44px; height: 44px; font-size: 1.2rem; }
+}
 .cluster[data-count='1'] .tile {
   width: min(230px, calc(290px * var(--art-ratio)));
   left: calc(50% - min(115px, calc(145px * var(--art-ratio))));
