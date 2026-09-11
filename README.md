@@ -36,7 +36,7 @@ Pushes to `main` run `.github/workflows/pages.yml`, which builds with Node 22 an
 ### GitHub
 
 1. Make the repo **public** unless you have a paid plan that allows Pages from a private repo.
-2. **Settings → Pages**: source **GitHub Actions**.
+2. The first successful Actions run enables Pages with source **GitHub Actions**. If deploy still 404s, open **Settings → Pages** and set the source yourself: https://github.com/curiousjam/museum-mood/settings/pages
 3. Custom domain: `mood.jezamancenido.com`.
 4. After DNS verifies, enable **Enforce HTTPS**. This can take up to an hour.
 
